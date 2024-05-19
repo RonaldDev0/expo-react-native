@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SearchInput from '@/components/SearchInput'
 import Trending from '@/components/Trending'
@@ -8,10 +8,12 @@ import useAppWrite from '@/lib/useAppWrite'
 import { getAllPosts, getLatestPosts } from '@/lib/appwrite'
 import VideoCard from '@/components/VideoCard'
 
+import { useGlobalContext } from '@/context/GlobalProvider'
 import { images } from '@/constants'
 
 export default function Home () {
-  const { data: posts, refetch, isLoading } = useAppWrite(getAllPosts)
+  const { user } = useGlobalContext()
+  const { data: posts, refetch } = useAppWrite(getAllPosts)
   const { data: latestPost } = useAppWrite(getLatestPosts)
 
   const [refreshing, setRefreshing] = useState(false)
@@ -35,10 +37,10 @@ export default function Home () {
             <View className='justify-between items-start flex-row mb-6'>
               <View>
                 <Text className='font-pmedium text-sm text-gray-100'>
-                  Welcome Back
+                  Welcome Back,
                 </Text>
                 <Text className='text-2xl font-psemibold text-white'>
-                  JSMaster
+                  {user?.username}
                 </Text>
               </View>
               <View className='mt-1.5'>
@@ -49,10 +51,7 @@ export default function Home () {
                 />
               </View>
             </View>
-            <SearchInput
-              value=''
-              handleChangeText={() => null}
-            />
+            <SearchInput />
             <View className='w-full flex-1 pt-5 pb-8'>
               <Text className='text-gray-100 text-lg font-pregular mb-3'>
                 Latest Videos

@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { getCurrentUser } from '@/lib/appwrite'
 
-const GlobalContext = createContext(null)
+const GlobalContext = createContext()
 export const useGlobalContext = () => useContext(GlobalContext)
 
-export default GlobalProvider = ({ children }) => {
+export default ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +32,7 @@ export default GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         isLoggedIn,
-        setIsLoading,
+        setIsLoggedIn,
         user,
         setUser,
         isLoading

@@ -7,6 +7,8 @@ import { useState } from 'react'
 import { Link, router } from 'expo-router'
 import { createUser } from '@/lib/appwrite'
 
+import { useGlobalContext } from '@/context/GlobalProvider'
+
 export default function SignUp () {
   const [form, setForm] = useState({
     username: '',
@@ -14,6 +16,7 @@ export default function SignUp () {
     password: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { setUser, setIsLoggedIn } = useGlobalContext()
 
   const submit = async () => {
     setIsSubmitting(true)
@@ -22,9 +25,10 @@ export default function SignUp () {
     }
     
     try {
-      await createUser(form.email, form.password, form.username)
+      const result = await createUser(form.email, form.password, form.username)
 
-      // set it to global state...
+      setUser(result)
+      setIsLoggedIn(true)
 
       router.replace('/home')
     } catch (error: any) {

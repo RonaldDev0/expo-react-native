@@ -107,3 +107,37 @@ export const getLatestPosts = async () => {
     throw new Error(error)
   }
 }
+
+export const searchPosts= async (query: string) => {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.videoCollectionId,
+      [Query.search('title', query)]
+    )
+    return posts.documents
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+export const getUserPost= async (userId: string) => {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.videoCollectionId,
+      [Query.equal('creator', userId)]
+    )
+    return posts.documents
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+export const signOut = async () => {
+  try {
+    return await account.deleteSession('current')
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
