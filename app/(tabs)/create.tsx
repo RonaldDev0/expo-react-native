@@ -64,7 +64,7 @@ export default function Create () {
 
   return (
     <SafeAreaView className='bg-primary h-full'>
-      <ScrollView className='px-4 my-6'>
+      <ScrollView className='px-4 mt-6'>
         <Text className='text-2xl text-white font-psemibold'>
           Upload video
         </Text>

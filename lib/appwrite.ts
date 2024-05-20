@@ -86,7 +86,8 @@ export const getAllPosts = async () => {
   try {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId
+      appwriteConfig.videoCollectionId,
+      [Query.orderDesc('$createdAt')]
     )
     return posts.documents
   } catch (error: any) {
@@ -127,7 +128,7 @@ export const getUserPost= async (userId: string) => {
     const posts = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.videoCollectionId,
-      [Query.equal('creator', userId)]
+      [Query.equal('creator', userId), Query.orderDesc('$createdAt')]
     )
     return posts.documents
   } catch (error: any) {
